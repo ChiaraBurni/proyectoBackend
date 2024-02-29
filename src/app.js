@@ -2,8 +2,8 @@ const express = require("express")
 
 const app = express()
 const PORT = 8080
-const { router: productsRouter } = require("./routes/products.router.js")
-const cartsRouter = require("./routes/carts.router.js")
+const { router: productsRouter } = require("./src/api/products/router.js")
+const cartsRouter = require("./src/api/carts/router.js")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
