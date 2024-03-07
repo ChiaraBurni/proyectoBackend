@@ -1,8 +1,9 @@
 {
-  "name": "proyectobackend",
+  "type": "module",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,3 +16,5 @@
     "socket.io": "^4.7.4"
   }
 }
+
+

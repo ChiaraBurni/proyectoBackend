@@ -2,10 +2,11 @@ import express from 'express';
 import path from 'path';
 import { Server } from 'socket.io';
 import { engine } from 'express-handlebars';
-import productRouter from './routes/product.router.js';
-import cartRouter from './routes/cart.router.js';
-import vistasRouter from "./routes/vistas.router.js";
-import socketProducts from "./listeners/socketProducts.js";
+import productRouter from './routers/products/router.js';
+import cartRouter from './routers/carts/router.js';
+import vistasRouter from "./routers/vistas.js";
+import socketProducts from "./listeners/realTimeProductUpdater.js";
+
 
 const app = express();
 const PORT = 8080;
