@@ -16,11 +16,11 @@ class ProductManager {
       const productExists = this.products.some(i => i.code === product.code)
 
       if (productExists) {
-        throw new Error("Product already exists")
+        throw new Error("El producto ya existe")
       }
 
       if (!product.title || !product.description || !product.price || !product.code || !product.stock || !product.category) {
-        throw new Error("Product missing fields")
+        throw new Error("Faltan campos del producto")
       }
 
       let maxId = this.products.length > 0 ? Math.max(...this.products.map(i => i.id)) : 0
@@ -59,7 +59,7 @@ class ProductManager {
     try {
       await fsPromises.writeFile(this.path, JSON.stringify(newProducts, null, 2))
     } catch (error) {
-      console.error("Products could not be written", error)
+      console.error("Los productos no pudieron ser escritos", error)
     }
   }
 
@@ -73,7 +73,7 @@ class ProductManager {
       await this.readProducts()
       const product = this.products.find(i => i.id === id)
       if (!product) {
-        throw new Error(`Product with Id: ${id} not found`)
+        throw new Error(`Producto con Id: ${id} no encontrado`)
       }
       return product
     } catch (error) {
@@ -87,7 +87,7 @@ class ProductManager {
       const productIndex = this.products.findIndex(i => i.id == id)
 
       if (productIndex === -1) {
-        throw new Error(`Product with Id: ${id} not found`)
+        throw new Error(`Producto con Id: ${id} no encontrado`)
       }
 
       this.products[productIndex] = {
@@ -108,7 +108,7 @@ class ProductManager {
       await this.readProducts()
       const productToDelete = this.products.find(product => product.id == id);
       if (!productToDelete) {
-        throw new Error(`Product with id ${id} not found`);
+        throw new Error(`Producto con Id: ${id} no encontrado`);
       }
       const filteredProducts = this.products.filter(i => i.id != id)
       await this.writeProducts(filteredProducts)
@@ -117,5 +117,4 @@ class ProductManager {
     }
   }
 }
-
-module.exports = ProductManager
+export default router;
