@@ -1,39 +1,32 @@
-import express from 'express';
-import path from 'path';
-import { Server } from 'socket.io';
-import { engine } from 'express-handlebars';
-import productRouter from './routers/products/router.js';
-import cartRouter from './routers/carts/router.js';
-import vistasRouter from "./routers/vistas.js";
-import socketProducts from "./listeners/realTimeProductUpdater.js";
+const express = require("express")
+const exphbs = require("express-handlebars")
+const io = require("./sockets.js")
+const { router: productsRouter } = require("./routes/products.router.js")
+const { router: cartsRouter } = require("./routes/carts.router.js")
+const viewsRouter = require("./routes/views.router.js")
+require("./database.js")
 
+const app = express()
+const PORT = 8080
 
-const app = express();
-const PORT = 8080;
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static("./src/public"))
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.engine("handlebars", exphbs.engine({
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+    allowProtoMethodsByDefault: true,
+  }
+}))
+app.set("view engine", "handlebars")
+app.set("views", "./src/views")
 
-app.use("/api/products", productRouter);
-app.use("/api/carts", cartRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
+app.use("/", viewsRouter);
 
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, '/views'));
+const httpServer = app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`))
 
-app.use(express.static(path.join(__dirname, '/public')));
-
-app.use("/", vistasRouter);
-
-app.use((req, res) => {
-    res.status(404).json({ error: "Ruta no encontrada" });
-});
-
-const server = app.listen(PORT, () => {
-    console.log(`Listening on http://localhost:${PORT}`);
-});
-
-const io = new Server(server); 
-
-socketProducts(io);
+io(httpServer)
 

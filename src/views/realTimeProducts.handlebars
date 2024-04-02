@@ -1,47 +1,18 @@
-<form id="formProduct">
-    <h2>Real Time Products</h2>
-    <div>
-        <h2>Agregar Producto:</h2>
+{{> navBar}}
 
-        <label for="title">Nombre del Producto</label>
-        <div>
-            <input class="form-control" type="text" name="title" id="title" placeholder="Inserte nombre del producto" required>
-        </div>
-       
-        <label for="description">Descripción</label>
-        <div>
-            <input class="form-control" type="text" name="description" id="description"
-                placeholder="Inserte descripción" required>
-        </div>
-       
-        <label for="price">Precio</label>
-        <div>
-            <input class="form-control" type="number" name="price" id="price" placeholder="Inserte precio" required>
-        </div>
+<h1>Real times Products</h1>
 
-         <label for="thumbnail">Imagen (URL)</label>
-        <div>
-            <input class="form-control" type="text" name="thumbnail" id="thumbnail" placeholder="Inserte URL">
-        </div>
+<div class="forms">
+  {{> formNewProduct}}
+  {{> formDeleteProduct}}
+</div>
 
-        <label for="stock">Stock</label>
-        <div>
-            <input class="form-control" type="number" name="stock" id="stock" placeholder="Inserte stock" required>
-        </div>
-        
-   
-        <label for="code">Codigo</label>
-        <div>
-            <input class="form-control" type="text" name="code" id="category" placeholder="Inserte código"
-                required>
-        </div>
+<div id="realTimeProducts" class="products">
+  {{#each products}}
+  {{> card}}
+  {{/each}}
+</div>
 
-        <div class="container-registrar-btn">
-            <button type="submit" id="add-btn">Registrar </button>
-        </div>
-    </div>
-</form>
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="../listeners/realTimeProductUpdater.js">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.socket.io/4.7.3/socket.io.min.js"></script>
+<script src="/js/main.js"></script>
